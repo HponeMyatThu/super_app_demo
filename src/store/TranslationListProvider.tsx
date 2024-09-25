@@ -12,9 +12,14 @@ interface TranslationState {
 const useTranslation = create<TranslationState>((set) => ({
   translation: [],
   addTranslationList: (newList: string[]) =>
-    set((state) => ({
-      translation: [...state.translation, ...newList],
-    })),
+    set((state) => {
+      const filteredNewList = newList.filter(
+        (id) => !state.translation.includes(id)
+      );
+      return {
+        translation: [...state.translation, ...filteredNewList],
+      };
+    }),
   removeAllTranslationList: () => set({ translation: [] }),
 }));
 
